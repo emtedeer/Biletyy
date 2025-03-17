@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Register</title>
+    <title>Rejestracja</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -48,18 +48,35 @@
             color: red;
             margin-top: 10px;
         }
+        .register-container a, button {
+            display: block;
+            margin: 10px 0;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 16px;
+        }
+
+        .register-container a:hover, button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
+<a href="/"><img src="/images/logo.png" alt="Logo" class="logo"></a>
 <div class="register-container">
-    <h2>Register</h2>
+    <h2>Rejestracja</h2>
     <form th:action="@{/register}" th:object="${user}" method="post">
-        <input type="text" th:field="*{username}" placeholder="Username" required>
-        <input type="password" th:field="*{password}" placeholder="Password" required>
-        <button type="submit">Register</button>
+        <input type="text" th:field="*{username}" placeholder="Login" required>
+        <input type="password" th:field="*{password}" placeholder="Hasło" required>
+        <button type="submit">Zarejestruj się</button>
     </form>
-    <div th:if="${error}" class="error" th:text="${error}"></div> <!-- Wyświetl komunikat o błędzie -->
-    <p>Already have an account? <a href="/login">Login here</a></p>
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+    <p>Posiadasz już konto? <a href="/login">Zaloguj się</a></p>
 </div>
 </body>
 </html>

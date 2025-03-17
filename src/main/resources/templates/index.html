@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Welcome to Airlines</title>
+    <title>Ale odLOT</title>
     <style>
         /* Ogólne style */
         body {
@@ -41,7 +41,7 @@
         }
 
         /* Przyciski i linki */
-        a {
+        .container a {
             display: block;
             margin: 10px 0;
             padding: 12px 20px;
@@ -53,10 +53,11 @@
             font-size: 16px;
         }
 
-        a:hover {
+        .container a:hover {
             background-color: #0056b3;
             transform: translateY(-2px);
         }
+
 
         /* Przycisk wylogowania */
         .logout-btn {
@@ -104,9 +105,8 @@
     </style>
 </head>
 <body>
+<a href="/"><img src="/images/logo.png" alt="Logo" class="logo"></a>
 <div class="container">
-
-    <img src="/images/logo.png" alt="Logo" class="logo">
 
     <div class="user-info">
         <span th:if="${#authentication.principal != null and #authentication.principal != 'anonymousUser'}">
@@ -114,6 +114,7 @@
         </span>
         <span th:unless="${#authentication.principal != null and #authentication.principal != 'anonymousUser'}">
             Nie jesteś zalogowany.
+            <a href="login.html">Zaloguj się</a>
         </span>
     </div>
 
