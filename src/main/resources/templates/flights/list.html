@@ -2,19 +2,123 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Flights List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Wyśrodkowanie zawartości */
+        }
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+        .logo-container {
+            text-align: center; /* Wyśrodkowanie logo */
+            margin-bottom: 20px;
+        }
+        .search-form {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px; /* Odstęp między elementami formularza */
+        }
+        .search-form input[type="text"] {
+            padding: 8px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-form button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-form button:hover {
+            background-color: #0056b3;
+        }
+        .reset-btn {
+            padding: 8px 16px;
+            background-color: #6c757d;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .reset-btn:hover {
+            background-color: #5a6268;
+        }
+        table {
+            width: 100%;
+            max-width: 800px; /* Ograniczenie szerokości tabeli */
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-<h1>Flights List</h1>
-<ul>
-    <li th:each="flight : ${flights}">
-        <a th:href="@{/flights/{id}(id=${flight.id})}" th:text="${flight.flightNumber} + ' - ' + ${flight.departure} + ' to ' + ${flight.destination}"></a>
-    </li>
-</ul>
-
-<div>
-    <a href="/flights/add">Add a New Flight</a>
+<!-- Logo wyśrodkowane na górze -->
+<div class="logo-container">
+    <a href="/"><img src="/images/logo.png" alt="Logo" class="logo"></a>
 </div>
 
-<a href="/">Back to Home</a>
+<h1>Lista lotów</h1>
+
+<!-- Formularz wyszukiwania -->
+<form class="search-form" th:action="@{/flights}" method="get">
+    <input type="text" name="departure" placeholder="Miasto odlotu" th:value="${param.departure}">
+    <input type="text" name="destination" placeholder="Miasto przylotu" th:value="${param.destination}">
+    <button type="submit">Wyszukaj</button>
+    <!-- Przycisk resetowania filtrów -->
+    <a href="/flights" class="reset-btn">Zresetuj</a>
+</form>
+
+<!-- Lista lotów -->
+<table>
+    <thead>
+    <tr>
+        <th>Numer lotu</th>
+        <th>Miasto odlotu</th>
+        <th>Miasto przylotu</th>
+        <th>Data odlotu</th>
+        <th>Data przylotu</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="flight : ${flights}">
+        <td><a th:href="@{/flights/{id}(id=${flight.id})}" th:text="${flight.flightNumber}"></a></td>
+        <td th:text="${flight.departure}"></td>
+        <td th:text="${flight.destination}"></td>
+        <td th:text="${#temporals.format(flight.departureTime, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${#temporals.format(flight.arrivalTime, 'yyyy-MM-dd HH:mm')}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Tylko ADMIN może dodawać loty -->
+<div th:if="${#authentication != null && #authentication.authorities.?[authority == 'ROLE_ADMIN'].size() > 0}">
+    <a href="/flights/add">Dodaj nowy lot</a>
+</div>
 </body>
 </html>

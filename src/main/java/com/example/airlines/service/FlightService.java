@@ -20,8 +20,20 @@ public class FlightService {
         return flightRepository.findById(id).orElse(null);
     }
 
-    // Nowa metoda do zapisywania lotu
     public Flight saveFlight(Flight flight) {
         return flightRepository.save(flight);
+    }
+
+    // Metoda do wyszukiwania lotów według miasta odlotu i przylotu
+    public List<Flight> getFlightsByDepartureAndDestination(String departure, String destination) {
+        if (departure != null && !departure.isEmpty() && destination != null && !destination.isEmpty()) {
+            return flightRepository.findByDepartureIgnoreCaseAndDestinationIgnoreCase(departure, destination);
+        } else if (departure != null && !departure.isEmpty()) {
+            return flightRepository.findByDepartureIgnoreCase(departure);
+        } else if (destination != null && !destination.isEmpty()) {
+            return flightRepository.findByDestinationIgnoreCase(destination);
+        } else {
+            return flightRepository.findAll();
+        }
     }
 }

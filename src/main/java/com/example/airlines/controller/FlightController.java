@@ -16,8 +16,18 @@ public class FlightController {
     private FlightService flightService;
 
     @GetMapping
-    public String getAllFlights(Model model) {
-        model.addAttribute("flights", flightService.getAllFlights());
+    public String getAllFlights(
+            @RequestParam(required = false) String departure,
+            @RequestParam(required = false) String destination,
+            Model model
+    ) {
+        if (departure != null && !departure.isEmpty() || destination != null && !destination.isEmpty()) {
+            // Jeśli użytkownik wpisał miasto odlotu lub przylotu, wyszukaj loty
+            model.addAttribute("flights", flightService.getFlightsByDepartureAndDestination(departure, destination));
+        } else {
+            // Jeśli nie ma kryteriów wyszukiwania, pokaż wszystkie loty
+            model.addAttribute("flights", flightService.getAllFlights());
+        }
         return "flights/list";
     }
 
@@ -27,7 +37,6 @@ public class FlightController {
         return "flights/details";
     }
 
-    // Nowe metody do dodawania lotów
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("flight", new Flight());
