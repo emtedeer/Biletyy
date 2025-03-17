@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Flights List</title>
+</head>
+<body>
+<h1>Flights List</h1>
+<ul>
+    <li th:each="flight : ${flights}">
+        <a th:href="@{/flights/{id}(id=${flight.id})}" th:text="${flight.flightNumber} + ' - ' + ${flight.departure} + ' to ' + ${flight.destination}"></a>
+    </li>
+</ul>
+
+<div>
+    <a href="/flights/add">Add a New Flight</a>
+</div>
+
+<a href="/">Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add Flight</title>
+</head>
+<body>
+<h1>Add a New Flight</h1>
+<form th:action="@{/flights/add}" th:object="${flight}" method="post">
+  <label for="flightNumber">Flight Number:</label>
+  <input type="text" id="flightNumber" th:field="*{flightNumber}" required>
+  <span th:if="${#fields.hasErrors('flightNumber')}" th:errors="*{flightNumber}"></span>
+  <br>
+  <label for="departure">Departure:</label>
+  <input type="text" id="departure" th:field="*{departure}" required>
+  <span th:if="${#fields.hasErrors('departure')}" th:errors="*{departure}"></span>
+  <br>
+  <label for="destination">Destination:</label>
+  <input type="text" id="destination" th:field="*{destination}" required>
+  <span th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></span>
+  <br>
+  <label for="departureTime">Departure Time:</label>
+  <input type="datetime-local" id="departureTime" th:field="*{departureTime}" required>
+  <span th:if="${#fields.hasErrors('departureTime')}" th:errors="*{departureTime}"></span>
+  <br>
+  <label for="arrivalTime">Arrival Time:</label>
+  <input type="datetime-local" id="arrivalTime" th:field="*{arrivalTime}" required>
+  <span th:if="${#fields.hasErrors('arrivalTime')}" th:errors="*{arrivalTime}"></span>
+  <br>
+  <button type="submit">Add Flight</button>
+</form>
+<a href="/flights">Back to Flights</a>
+</body>
+</html>

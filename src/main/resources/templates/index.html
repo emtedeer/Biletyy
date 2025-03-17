@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome to Airlines</title>
+    <style>
+        /* Ogólne style */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Kontener główny */
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        /* Logo */
+        .logo {
+            width: 100%; /* Dostosuj szerokość logo */
+            margin-bottom: 20px;
+        }
+
+        /* Nagłówek */
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        /* Przyciski i linki */
+        a {
+            display: block;
+            margin: 10px 0;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 16px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Przycisk wylogowania */
+        .logout-btn {
+            background-color: #dc3545;
+            border: none;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .logout-btn:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+
+        /* Informacje o użytkowniku */
+        .user-info {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #495057;
+        }
+
+        .user-info strong {
+            color: #007bff;
+        }
+
+        /* Komunikaty */
+        .success {
+            color: #28a745;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        /* Dodatkowe style dla tekstu */
+        p {
+            color: #6c757d;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <img src="/images/logo.png" alt="Logo" class="logo">
+
+    <div class="user-info">
+        <span th:if="${#authentication.principal != null and #authentication.principal != 'anonymousUser'}">
+            Jesteś zalogowany jako: <strong th:text="${#authentication.principal.username}"></strong>
+        </span>
+        <span th:unless="${#authentication.principal != null and #authentication.principal != 'anonymousUser'}">
+            Nie jesteś zalogowany.
+        </span>
+    </div>
+
+    <p>Wybierz opcję:</p>
+
+    <a href="/flights">Zobacz aktualne loty</a>
+    <div th:if="${#authentication != null && #authentication.authorities.?[authority == 'ROLE_ADMIN'].size() > 0}">
+        <a href="/tickets">Wyświetl bilety</a>
+        <a href="/flights/add">Dodaj nowy lot</a>
+    </div>
+    <a href="/tickets/book">Zarezewuj bilet</a>
+
+    <!-- Przycisk wylogowania -->
+    <form th:if="${#authentication.principal != null and #authentication.principal != 'anonymousUser'}" th:action="@{/logout}" method="post">
+        <button type="submit" class="logout-btn">Wyloguj się</button>
+    </form>
+
+    <!-- Komunikat po wylogowaniu -->
+    <div th:if="${param.logout}" class="success">
+        Zostałeś wylogowany.
+    </div>
+</div>
+</body>
+</html>
