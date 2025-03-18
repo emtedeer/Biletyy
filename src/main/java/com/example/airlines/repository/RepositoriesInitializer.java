@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.Collections;
 
 @Configuration
 public class RepositoriesInitializer {
@@ -39,25 +40,6 @@ public class RepositoriesInitializer {
                 flight2.setDepartureTime(LocalDateTime.of(2023, 10, 2, 14, 0));
                 flight2.setArrivalTime(LocalDateTime.of(2023, 10, 2, 16, 0));
                 flightRepository.save(flight2);
-            }
-
-            // Dodaj przykładowe bilety, jeśli baza jest pusta
-            if (ticketRepository.findAll().isEmpty()) {
-                Flight flight1 = flightRepository.findByFlightNumber("FL123").orElseThrow();
-
-                Ticket ticket1 = new Ticket();
-                ticket1.setPassengerName("John Doe");
-                ticket1.setSeatNumber("A1");
-                ticket1.setFlight(flight1);
-                ticketRepository.save(ticket1);
-
-                Flight flight2 = flightRepository.findByFlightNumber("FL456").orElseThrow();
-
-                Ticket ticket2 = new Ticket();
-                ticket2.setPassengerName("Jane Smith");
-                ticket2.setSeatNumber("B2");
-                ticket2.setFlight(flight2);
-                ticketRepository.save(ticket2);
             }
         };
     }

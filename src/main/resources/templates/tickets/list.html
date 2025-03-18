@@ -1,28 +1,77 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Tickets List</title>
+    <title>Lista biletów</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .logo-container {
+            text-align: center; /* Wyśrodkowanie logo */
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-<h1>Tickets List</h1>
+<h1>Lista biletów</h1>
+
+<div class="logo-container">
+    <a href="/"><img src="/images/logo.png" alt="Logo" class="logo"></a>
+</div>
+
 <table>
     <thead>
     <tr>
-        <th>Passenger Name</th>
-        <th>Seat Number</th>
-        <th>Flight Number</th>
+        <th>Imię</th>
+        <th>Nazwisko</th>
+        <th>Data urodzenia</th>
+        <th>Numer paszportu</th>
+        <th>Numer telefonu</th>
+        <th>Numer siedzenia</th>
+        <th>Lot</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="ticket : ${tickets}">
-        <td th:text="${ticket.passengerName}"></td>
+        <td th:text="${ticket.firstName}"></td>
+        <td th:text="${ticket.lastName}"></td>
+        <td th:text="${#temporals.format(ticket.dateOfBirth, 'yyyy-MM-dd')}"></td>
+        <td th:text="${ticket.passportNumber}"></td>
+        <td th:text="${ticket.phoneNumber}"></td>
         <td th:text="${ticket.seatNumber}"></td>
-        <td th:text="${ticket.flight.flightNumber}"></td>
+        <td th:text="${ticket.flight.flightNumber + ' - ' + ticket.flight.departure + ' to ' + ticket.flight.destination}"></td>
     </tr>
     </tbody>
 </table>
-<a href="/tickets/book">Book a Ticket</a>
+
+<a href="/tickets/book">Zarezerwuj nowy bilet</a>
 <br>
-<a href="/flights">Back to Flights</a>
+<a href="/flights">Powrót do listy lotów</a>
 </body>
 </html>

@@ -456,3 +456,11 @@ alter table if exists user add constraint UKsb8bbouer5wak8vyiiy4pf2bx unique (us
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Błąd składniowy w wyrażeniu SQL "insert into [*]user (password,role,username,id) values (?,?,?,default)"; oczekiwano "identifier"
 Syntax error in SQL statement "insert into [*]user (password,role,username,id) values (?,?,?,default)"; expected "identifier"; SQL statement:
 insert into user (password,role,username,id) values (?,?,?,default) [42001-232]
+2025-03-18 21:06:51.513393+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "YOUR_TABLE_NAME" nie istnieje
+Table "YOUR_TABLE_NAME" not found; SQL statement:
+ALTER TABLE your_table_name DROP COLUMN PASSENGER_NAME [42102-232]
+2025-03-18 21:06:51.519393+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabela "YOUR_TABLE_NAME" nie istnieje
+Table "YOUR_TABLE_NAME" not found; SQL statement:
+DELETE FROM your_table_name WHERE ID IN (1, 2, 3, 4) [42102-232]

@@ -1,20 +1,30 @@
 package com.example.airlines.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String passengerName;
+
+    private String firstName;
+    private String lastName;
+    private LocalDate dateOfBirth;
+    private String passportNumber;
+    private String phoneNumber;
     private String seatNumber;
 
     @ManyToOne
     @JoinColumn(name = "flight_id")
-    private Flight flight;
+    private Flight flight;          // Lot
 
-    // Getters and Setters
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    // Gettery i settery
     public Long getId() {
         return id;
     }
@@ -23,12 +33,44 @@ public class Ticket {
         this.id = id;
     }
 
-    public String getPassengerName() {
-        return passengerName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setPassengerName(String passengerName) {
-        this.passengerName = passengerName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getPassportNumber() {
+        return passportNumber;
+    }
+
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getSeatNumber() {
@@ -45,5 +87,13 @@ public class Ticket {
 
     public void setFlight(Flight flight) {
         this.flight = flight;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

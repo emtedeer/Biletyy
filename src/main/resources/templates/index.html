@@ -125,6 +125,9 @@
         <a href="/tickets">Wyświetl bilety</a>
         <a href="/flights/add">Dodaj nowy lot</a>
     </div>
+    <div th:if="${#authentication != null && #authentication.authorities.?[authority == 'ROLE_USER'].size() > 0}">
+        <a href="/tickets">Wyświetl moje bilety</a>
+    </div>
     <a href="/tickets/book">Zarezewuj bilet</a>
 
     <!-- Przycisk wylogowania -->
