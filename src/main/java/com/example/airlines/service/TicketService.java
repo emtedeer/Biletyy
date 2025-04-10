@@ -6,6 +6,7 @@ import com.example.airlines.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,6 +23,7 @@ public class TicketService {
     }
 
     public void bookTicket(Ticket ticket) {
+        ticket.setBookingDate(new Date());
         ticketRepository.save(ticket);
     }
 }

@@ -23,7 +23,7 @@ public class RepositoriesInitializer {
     @Bean
     InitializingBean init() {
         return () -> {
-            // Dodaj przykładowe loty, jeśli baza jest pusta
+            // przykładowe loty, jeśli baza jest pusta
             if (flightRepository.findAll().isEmpty()) {
                 Flight flight1 = new Flight();
                 flight1.setFlightNumber("FL123");

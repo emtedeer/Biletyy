@@ -24,7 +24,6 @@ public class FlightService {
         return flightRepository.save(flight);
     }
 
-    // Metoda do wyszukiwania lotów według miasta odlotu i przylotu
     public List<Flight> getFlightsByDepartureAndDestination(String departure, String destination) {
         if (departure != null && !departure.isEmpty() && destination != null && !destination.isEmpty()) {
             return flightRepository.findByDepartureIgnoreCaseAndDestinationIgnoreCase(departure, destination);

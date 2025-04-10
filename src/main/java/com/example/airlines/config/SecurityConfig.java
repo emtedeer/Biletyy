@@ -20,26 +20,26 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/public/**", "/register", "/login", "/h2-console/**", "/images/*").permitAll() // Zezwól na dostęp do strony głównej, rejestracji, logowania i konsoli H2 bez logowania
-                        .requestMatchers("/flights", "/tickets").authenticated() // Wymagaj logowania dla tych endpointów
-                        .anyRequest().authenticated() // Wszystkie inne żądania wymagają logowania
+                        .requestMatchers("/", "/public/**", "/register", "/login", "/h2-console/**", "/images/*", "/flights*").permitAll() // Zezwól na dostęp do strony głównej, rejestracji, logowania i konsoli H2 bez logowania
+                        .requestMatchers("/tickets").authenticated() // Wymagaj logowania dla tych endpointów
+                        .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true) // Przekieruj po udanym logowaniu
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) // Endpoint do wylogowania
-                        .logoutSuccessUrl("/?logout") // Przekieruj na stronę główną po wylogowaniu
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/?logout")
                         .permitAll()
                 )
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**") // Wyłącz CSRF dla konsoli H2
+                        .ignoringRequestMatchers("/h2-console/**")
                 )
                 .headers(headers -> headers
                         .frameOptions(frameOptions -> frameOptions
-                                .disable() // Wyłącz X-Frame-Options dla konsoli H2
+                                .disable()
                         )
                 );
 

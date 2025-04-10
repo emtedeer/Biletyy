@@ -2,6 +2,8 @@ package com.example.airlines.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Ticket {
@@ -24,7 +26,20 @@ public class Ticket {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Gettery i settery
+    public List<Luggage> getLuggageList() {
+        return luggageList;
+    }
+
+    public void setLuggageList(List<Luggage> luggageList) {
+        this.luggageList = luggageList;
+    }
+
+    @OneToMany(mappedBy = "ticket")
+    private List<Luggage> luggageList;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date bookingDate = new Date();
+
     public Long getId() {
         return id;
     }
@@ -95,5 +110,13 @@ public class Ticket {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Date getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(Date bookingDate) {
+        this.bookingDate = bookingDate;
     }
 }

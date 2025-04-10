@@ -22,9 +22,8 @@ public class User implements UserDetails {
     private String password;
 
     @Column(nullable = false)
-    private String role = "USER"; // Domyślna rola to USER
+    private String role = "USER";
 
-    // Implementacja metod z UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(() -> "ROLE_" + role);

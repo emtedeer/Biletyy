@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Book a Ticket</title>
+    <title>Zarezerwuj bilet</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,6 +12,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: row;
         }
         .book-form {
             background: #fff;
@@ -43,30 +44,32 @@
     </style>
 </head>
 <body>
+<a href="/"><img src="/images/logo.png" alt="Logo" class="logo"></a>
 <div class="book-form">
-    <h2>Book a Ticket</h2>
+    <h2>Zarezerwuj bilet</h2>
     <form th:action="@{/tickets/book}" th:object="${ticket}" method="post">
-        <!-- Imię -->
-        <input type="text" th:field="*{firstName}" placeholder="First Name" required>
-        <!-- Nazwisko -->
-        <input type="text" th:field="*{lastName}" placeholder="Last Name" required>
-        <!-- Data urodzenia -->
-        <input type="date" th:field="*{dateOfBirth}" placeholder="Date of Birth" required>
-        <!-- Numer paszportu -->
-        <input type="text" th:field="*{passportNumber}" placeholder="Passport Number" required>
-        <!-- Numer telefonu -->
-        <input type="text" th:field="*{phoneNumber}" placeholder="Phone Number" required>
-        <!-- Numer siedzenia -->
-        <input type="text" th:field="*{seatNumber}" placeholder="Seat Number" required>
-        <!-- Wybór lotu -->
+        <input type="text" th:field="*{firstName}" placeholder="Imię" required>
+        <input type="text" th:field="*{lastName}" placeholder="Nazwisko" required>
+        <input type="date" th:field="*{dateOfBirth}" placeholder="Data urodzenia" required>
+        <input type="text" th:field="*{passportNumber}" placeholder="Numer paszportu" required>
+        <input type="text" th:field="*{phoneNumber}" placeholder="Numer telefonu" required>
+        <input type="number" max="30" th:field="*{seatNumber}" placeholder="Numer siedzenia" required>
+
         <select th:field="*{flight}">
             <option th:each="flight : ${flights}"
                     th:value="${flight.id}"
-                    th:text="${flight.flightNumber + ' - ' + flight.departure + ' to ' + flight.destination}">
-            </option>
+                    th:text="${flight.flightNumber + ' - ' + flight.departure + ' do ' + flight.destination}"></option>
         </select>
-        <button type="submit">Book</button>
+
+        <select name="luggageType" required>
+            <option value="CABIN">Bagaż podręczny</option>
+            <option value="CHECKED">Bagaż rejestrowany</option>
+        </select>
+        <input type="number" name="weight" step="0.1" placeholder="Waga bagażu (kg)" required>
+
+        <button type="submit">Zarezerwuj</button>
     </form>
 </div>
+
 </body>
 </html>

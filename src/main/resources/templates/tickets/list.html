@@ -33,7 +33,7 @@
             text-decoration: underline;
         }
         .logo-container {
-            text-align: center; /* Wyśrodkowanie logo */
+            text-align: center;
             margin-bottom: 20px;
         }
     </style>
@@ -55,17 +55,27 @@
         <th>Numer telefonu</th>
         <th>Numer siedzenia</th>
         <th>Lot</th>
+        <th>Bagaż</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="ticket : ${tickets}">
-        <td th:text="${ticket.firstName}"></td>
-        <td th:text="${ticket.lastName}"></td>
-        <td th:text="${#temporals.format(ticket.dateOfBirth, 'yyyy-MM-dd')}"></td>
-        <td th:text="${ticket.passportNumber}"></td>
-        <td th:text="${ticket.phoneNumber}"></td>
-        <td th:text="${ticket.seatNumber}"></td>
-        <td th:text="${ticket.flight.flightNumber + ' - ' + ticket.flight.departure + ' to ' + ticket.flight.destination}"></td>
+        <td th:text="${ticket.firstName}">Imię</td>
+        <td th:text="${ticket.lastName}">Nazwisko</td>
+        <td th:text="${#temporals.format(ticket.dateOfBirth, 'dd-MM-yyyy')}">01-01-2000</td>
+        <td th:text="${ticket.passportNumber}">AA123456</td>
+        <td th:text="${ticket.phoneNumber}">123456789</td>
+        <td th:text="${ticket.seatNumber}">12A</td>
+
+        <td>
+            <a th:href="@{/flights/{id}(id=${ticket.flight.id})}"
+               th:text="${ticket.flight.flightNumber + ' - ' + ticket.flight.departure + ' do ' + ticket.flight.destination}">
+            </a>
+        </td>
+
+        <td th:each="l : ${ticket.luggageList}"
+            th:text="${l.typeName + ' | ' + l.weight + 'kg'}">
+        </td>
     </tr>
     </tbody>
 </table>

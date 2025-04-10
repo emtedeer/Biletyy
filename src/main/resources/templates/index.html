@@ -3,7 +3,6 @@
 <head>
     <title>Ale odLOT</title>
     <style>
-        /* Ogólne style */
         body {
             font-family: 'Arial', sans-serif;
             background-color: #e9ecef;
@@ -16,7 +15,6 @@
             flex-direction: column;
         }
 
-        /* Kontener główny */
         .container {
             background: #ffffff;
             padding: 30px;
@@ -27,20 +25,17 @@
             width: 100%;
         }
 
-        /* Logo */
         .logo {
-            width: 100%; /* Dostosuj szerokość logo */
+            width: 100%;
             margin-bottom: 20px;
         }
 
-        /* Nagłówek */
         h1 {
             color: #343a40;
             margin-bottom: 20px;
             font-size: 24px;
         }
 
-        /* Przyciski i linki */
         .container a {
             display: block;
             margin: 10px 0;
@@ -58,8 +53,6 @@
             transform: translateY(-2px);
         }
 
-
-        /* Przycisk wylogowania */
         .logout-btn {
             background-color: #dc3545;
             border: none;
@@ -78,7 +71,6 @@
             transform: translateY(-2px);
         }
 
-        /* Informacje o użytkowniku */
         .user-info {
             margin-bottom: 20px;
             font-size: 16px;
@@ -89,14 +81,12 @@
             color: #007bff;
         }
 
-        /* Komunikaty */
         .success {
             color: #28a745;
             margin-top: 15px;
             font-size: 14px;
         }
 
-        /* Dodatkowe style dla tekstu */
         p {
             color: #6c757d;
             margin-bottom: 20px;
@@ -130,12 +120,10 @@
     </div>
     <a href="/tickets/book">Zarezewuj bilet</a>
 
-    <!-- Przycisk wylogowania -->
     <form th:if="${#authentication.principal != null and #authentication.principal != 'anonymousUser'}" th:action="@{/logout}" method="post">
         <button type="submit" class="logout-btn">Wyloguj się</button>
     </form>
 
-    <!-- Komunikat po wylogowaniu -->
     <div th:if="${param.logout}" class="success">
         Zostałeś wylogowany.
     </div>

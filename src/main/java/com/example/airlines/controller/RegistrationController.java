@@ -22,12 +22,11 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public String registerUser(User user, Model model) {
-        // Spróbuj zarejestrować użytkownika
         if (userService.registerUser(user)) {
-            return "redirect:/login"; // Przekieruj do strony logowania po udanej rejestracji
+            return "redirect:/login";
         } else {
-            model.addAttribute("error", "Username already exists"); // Dodaj komunikat o błędzie
-            return "register"; // Wróć do formularza rejestracji
+            model.addAttribute("error", "Taki użytkownik już istnieje");
+            return "register";
         }
     }
 }

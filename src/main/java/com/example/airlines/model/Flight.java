@@ -28,6 +28,18 @@ public class Flight {
     @NotNull(message = "{arrivalTime.required}")
     private LocalDateTime arrivalTime;
 
+    @ManyToOne
+    @JoinColumn(name = "airplane_id")
+    private Airplane airplane;
+
+    public Airplane getAirplane() {
+        return airplane;
+    }
+
+    public void setAirplane(Airplane airplane) {
+        this.airplane = airplane;
+    }
+
     public Long getId() {
         return id;
     }

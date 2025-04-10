@@ -1,8 +1,10 @@
 package com.example.airlines.controller;
 
+import com.example.airlines.model.Luggage;
 import com.example.airlines.model.Ticket;
 import com.example.airlines.model.User;
 import com.example.airlines.service.FlightService;
+import com.example.airlines.service.LuggageService;
 import com.example.airlines.service.TicketService;
 import com.example.airlines.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,10 @@ public class TicketController {
     @Autowired
     private FlightService flightService;
 
+    @Autowired
+    private LuggageService luggageService;
+
+
     @GetMapping
     public String getAllTickets(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName());
@@ -44,11 +50,23 @@ public class TicketController {
     }
 
     @PostMapping("/book")
-    public String bookTicket(@ModelAttribute Ticket ticket, Principal principal) {
+    public String bookTicket(@ModelAttribute Ticket ticket,
+                             @RequestParam("luggageType") String luggageType,
+                             @RequestParam("weight") double weight,
+                             Principal principal) {
+
         User user = userService.findByUsername(principal.getName());
         ticket.setUser(user);
 
         ticketService.bookTicket(ticket);
+
+        Luggage luggage = new Luggage();
+        luggage.setType(Luggage.LuggageType.valueOf(luggageType));
+        luggage.setWeight(weight);
+        luggage.setTicket(ticket);
+        luggageService.save(luggage);
+
         return "redirect:/tickets";
     }
+
 }

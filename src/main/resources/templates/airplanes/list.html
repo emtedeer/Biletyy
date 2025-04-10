@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Samoloty</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      margin: 0;
+    }
+    .logo-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .logo-container img {
+      max-width: 100%;
+      height: auto;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 80%;
+      border-collapse: collapse;
+      background-color: #fff;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+    td a {
+      color: #2980b9;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    td a:hover {
+      color: #3498db;
+      text-decoration: underline;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #7f8c8d;
+      transition: color 0.3s ease;
+    }
+    .back-link:hover {
+      color: #2c3e50;
+    }
+  </style>
+</head>
+<body>
+
+<div class="logo-container">
+  <a href="/"><img src="/images/logo.png" alt="Logo"></a>
+</div>
+
+<h1>Lista samolotów</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Model</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="airplane : ${airplanes}">
+    <td>
+      <a th:href="@{/airplanes/{id}(id=${airplane.id})}" th:text="${airplane.model}">Model</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<a href="/" class="back-link">Powrót do strony głównej</a>
+
+</body>
+</html>

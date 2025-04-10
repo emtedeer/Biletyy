@@ -1,15 +1,120 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Flight Details</title>
+    <title>Szczegóły lotu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-container img {
+            height: auto;
+        }
+
+        p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        p strong {
+            color: #2980b9;
+        }
+
+        a {
+            color: #2980b9;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #3498db;
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .back-link:hover {
+            color: #2c3e50;
+        }
+
+        .flight-details {
+            border-top: 1px solid #ecf0f1;
+            padding-top: 20px;
+        }
+
+        .flight-details p {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .flight-details p span:first-child {
+            font-weight: bold;
+        }
+
+        .flight-details p span:last-child {
+            color: #2c3e50;
+        }
+    </style>
 </head>
 <body>
-<h1>Flight Details</h1>
-<p><strong>Flight Number:</strong> <span th:text="${flight.flightNumber}"></span></p>
-<p><strong>Departure:</strong> <span th:text="${flight.departure}"></span></p>
-<p><strong>Destination:</strong> <span th:text="${flight.destination}"></span></p>
-<p><strong>Departure Time:</strong> <span th:text="${flight.departureTime}"></span></p>
-<p><strong>Arrival Time:</strong> <span th:text="${flight.arrivalTime}"></span></p>
-<a href="/flights">Back to List</a>
+
+<div class="logo-container">
+    <a href="/"><img src="/images/logo.png" alt="Logo" class="logo"></a>
+</div>
+
+<div class="container">
+    <h1>Szczegóły lotu</h1>
+
+    <div class="flight-details">
+        <p><span>Numer lotu:</span> <span th:text="${flight.flightNumber}"></span></p>
+        <p><span>Miejsce wylotu:</span> <span th:text="${flight.departure}"></span></p>
+        <p><span>Cel podróży:</span> <span th:text="${flight.destination}"></span></p>
+        <p><span>Godzina wylotu:</span>
+            <span th:text="${#temporals.format(flight.departureTime, 'dd.MM.yyyy, HH:mm')}"></span>
+        </p>
+        <p><span>Godzina przylotu:</span>
+            <span th:text="${#temporals.format(flight.arrivalTime, 'dd.MM.yyyy, HH:mm')}"></span>
+        </p>
+        <p><span>Samolot:</span>
+            <a th:href="@{/airplanes/{id}(id=${flight.airplane.id})}"
+               th:text="${flight.airplane.model}">
+            </a>
+        </p>
+    </div>
+
+    <a href="/flights" class="back-link">Powrót do listy lotów</a>
+</div>
+
 </body>
 </html>

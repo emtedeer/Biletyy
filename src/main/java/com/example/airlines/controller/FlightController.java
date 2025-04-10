@@ -1,6 +1,7 @@
 package com.example.airlines.controller;
 
 import com.example.airlines.model.Flight;
+import com.example.airlines.service.AirplaneService;
 import com.example.airlines.service.FlightService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,12 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/flights")
 public class FlightController {
+
     @Autowired
     private FlightService flightService;
+
+    @Autowired
+    private AirplaneService airplaneService;
 
     @GetMapping
     public String getAllFlights(
@@ -21,11 +26,9 @@ public class FlightController {
             @RequestParam(required = false) String destination,
             Model model
     ) {
-        if (departure != null && !departure.isEmpty() || destination != null && !destination.isEmpty()) {
-            // Jeśli użytkownik wpisał miasto odlotu lub przylotu, wyszukaj loty
+        if ((departure != null && !departure.isEmpty()) || (destination != null && !destination.isEmpty())) {
             model.addAttribute("flights", flightService.getFlightsByDepartureAndDestination(departure, destination));
         } else {
-            // Jeśli nie ma kryteriów wyszukiwania, pokaż wszystkie loty
             model.addAttribute("flights", flightService.getAllFlights());
         }
         return "flights/list";
@@ -38,14 +41,16 @@ public class FlightController {
     }
 
     @GetMapping("/add")
-    public String showAddForm(Model model) {
+    public String showFlightForm(Model model) {
         model.addAttribute("flight", new Flight());
+        model.addAttribute("airplanes", airplaneService.getAllAirplanes());
         return "flights/add";
     }
 
     @PostMapping("/add")
     public String addFlight(@ModelAttribute @Valid Flight flight, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("airplanes", airplaneService.getAllAirplanes());
             return "flights/add";
         }
         flightService.saveFlight(flight);

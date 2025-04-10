@@ -1,33 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Add Flight</title>
+  <title>Dodaj nowy lot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: row;
+    }
+    .logo-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+    .form-container input, .form-container select {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .form-container button:hover {
+      background-color: #0056b3;
+    }
+    h1 {
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-<h1>Add a New Flight</h1>
-<form th:action="@{/flights/add}" th:object="${flight}" method="post">
-  <label for="flightNumber">Flight Number:</label>
-  <input type="text" id="flightNumber" th:field="*{flightNumber}" required>
-  <span th:if="${#fields.hasErrors('flightNumber')}" th:errors="*{flightNumber}"></span>
-  <br>
-  <label for="departure">Departure:</label>
-  <input type="text" id="departure" th:field="*{departure}" required>
-  <span th:if="${#fields.hasErrors('departure')}" th:errors="*{departure}"></span>
-  <br>
-  <label for="destination">Destination:</label>
-  <input type="text" id="destination" th:field="*{destination}" required>
-  <span th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></span>
-  <br>
-  <label for="departureTime">Departure Time:</label>
-  <input type="datetime-local" id="departureTime" th:field="*{departureTime}" required>
-  <span th:if="${#fields.hasErrors('departureTime')}" th:errors="*{departureTime}"></span>
-  <br>
-  <label for="arrivalTime">Arrival Time:</label>
-  <input type="datetime-local" id="arrivalTime" th:field="*{arrivalTime}" required>
-  <span th:if="${#fields.hasErrors('arrivalTime')}" th:errors="*{arrivalTime}"></span>
-  <br>
-  <button type="submit">Add Flight</button>
-</form>
-<a href="/flights">Back to Flights</a>
+<a href="/"><img src="/images/logo.png" alt="Logo" class="logo"></a>
+<div class="form-container">
+  <h1>Dodaj nowy lot</h1>
+  <form th:action="@{/flights/add}" th:object="${flight}" method="post">
+    <label for="flightNumber">Numer lotu:</label>
+    <input type="text" id="flightNumber" th:field="*{flightNumber}" required>
+    <span th:if="${#fields.hasErrors('flightNumber')}" th:errors="*{flightNumber}"></span>
+    <br>
+
+    <label for="departure">Miejsce wylotu:</label>
+    <input type="text" id="departure" th:field="*{departure}" required>
+    <span th:if="${#fields.hasErrors('departure')}" th:errors="*{departure}"></span>
+    <br>
+
+    <label for="destination">Cel podróży:</label>
+    <input type="text" id="destination" th:field="*{destination}" required>
+    <span th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></span>
+    <br>
+
+    <label for="departureTime">Data i godzina wylotu:</label>
+    <input type="datetime-local" id="departureTime" th:field="*{departureTime}" required>
+    <span th:if="${#fields.hasErrors('departureTime')}" th:errors="*{departureTime}"></span>
+    <br>
+
+    <label for="arrivalTime">Data i godzina przylotu:</label>
+    <input type="datetime-local" id="arrivalTime" th:field="*{arrivalTime}" required>
+    <span th:if="${#fields.hasErrors('arrivalTime')}" th:errors="*{arrivalTime}"></span>
+    <br>
+
+    <label for="airplane">Samolot:</label>
+    <select id="airplane" th:field="*{airplane}">
+      <option th:each="plane : ${airplanes}"
+              th:value="${plane.id}"
+              th:text="${plane.model + ' - ' + plane.numberOfSeats + ' miejsc'}">
+      </option>
+    </select>
+    <br>
+
+    <button type="submit">Dodaj lot</button>
+  </form>
+</div>
+
 </body>
 </html>
